@@ -1,0 +1,31 @@
+﻿@page
+@model RecordCollectionUI.Pages.Account.LoginModel
+@{
+}
+<div class="container">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label for="inputEmail" asp-for="LoginInfo.Email" class="form-label"></label>
+            </div>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail" asp-for="LoginInfo.Email" />
+                <span class="text-danger" asp-validation-for="LoginInfo.Email"></span>
+            </div>
+
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-2">
+                <label for="inputPassword" asp-for="LoginInfo.Password" class="form-label"></label>
+            </div>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword" asp-for="LoginInfo.Password" />
+                <span class="text-danger" asp-validation-for="LoginInfo.Password"></span>
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-secondary">Login</button>
+    </form>
+</div>
+

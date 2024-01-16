@@ -1,0 +1,86 @@
+﻿@page
+@model RecordCollectionUI.Pages.Albums.IndexModel
+@{
+    ViewData["Title"] = "Albums";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+
+<form method="get">
+    <div class="input-group mb-3">
+        <input class="form-control" asp-for="SearchTerm" placeholder="Enter Album Title"/>
+        <div>
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </div>
+    </div>
+</form>
+
+<!--bootstrap row has 12 columns-->
+<div class="container">
+    <div class="row mb-3">
+        <!--mb is margin-bottom, number is number of pixels-->
+        <div class="col-sm-3">
+            <h2>Album List</h2>
+        </div>
+        <div class="col-sm-9">
+            <a class="btn btn-secondary" asp-page="AddAlbum">Add Album</a>
+        </div>
+    </div>
+    @foreach (var album in Model.AlbumList)
+    {
+        <!--Album List-->
+        <div class="row mb-3">
+            <div class="col-sm-3">
+                <!--Where Album image goes-->
+                <img class="album-image" src="@album.AlbumCoverImageURL" />
+            </div>
+
+            <div class="col-sm-8">
+                <!--Where Album information goes-->
+                <div class="row">
+                    <!--Album tile here-->
+                    <div class="col-sm-12, title-name">
+                        @album.AlbumTitle
+                    </div>
+                </div>
+
+                <!--somehow list artist of album here-->
+
+                <div class="row">
+                    <!--No. of track here-->
+                    <div class="col-sm-12, info-bio">
+                        Number of tracks: @album.NumberOfTracks
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--Album relase date here-->
+                    <div class="col-sm-12, info-bio">
+                        Release Year: @album.ReleaseYear
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--Album price here-->
+                    <div class="col-sm-12, info-bio">
+                        $@album.Price
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-1">
+                <div class="col-sm-12">
+                    <a asp-page="EditAlbum" asp-route-id="@album.AlbumID" class="icon" title="Edit @album.AlbumTitle">
+                        <i class="bi bi-pencil-square mx-2"></i>
+                    </a>
+                    <a asp-page="DeleteAlbum" asp-route-id="@album.AlbumID" class="icon" 
+                    onclick="return confirm('Are you sure you want to delete the album? The action cannot be undone')" title="Delete @album.AlbumTitle">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

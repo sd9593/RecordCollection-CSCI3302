@@ -1,0 +1,58 @@
+﻿@page
+@*@model IndexModel*@
+@{
+    ViewData["Title"] = "Record Collection";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #44344F;
+            color: #98A6D4;
+        }
+
+        .block {
+            width: 315px;
+        }
+    </style>
+</head>
+<body>
+    <div class="indexHeader">
+        <h1>Welcome to the Record Collection!</h1>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="vinyl_img">
+                <img src="images/clipart50877.png" width="300px" height="auto" />
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="mx-auto p-2 block">
+                <div id="carouselAuto" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://m.media-amazon.com/images/I/51k99rzPZGL.jpg" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/f/fd/At_Last_-_Etta_James.jpg" class="d-block w-100">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/f/fb/FMacRumours.PNG" class="d-block w-100">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="vinyl_img">
+                <img src="images/clipart50877_invert.png" width="300px" height="auto" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿@page
+@model RecordCollectionUI.Pages.Artists.AddArtistModel
+@{
+    ViewData["Title"] = "Add Artist";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+
+<script type="text/javascript">
+    function validateInput(){
+        var isValid = true;
+        var artistName = document.getElementById("inputArtistName");
+        var artistBio = document.getElementById("inputArtistBio");
+        if (artistName.value == "") {
+            @*.value gets what is in the textbox*@
+            isValid = false;
+            document.getElementById("artistNameError").innerHTML = "This field is required.";
+        }
+        if (artistBio.value == "") {
+            @*.value gets what is in the textbox*@
+            isValid = false;
+            document.getElementById("artistBioError").innerHTML = "This field is required.";
+        }
+        return isValid;
+    }
+</script>
+
+<form method="post">
+    <div class="row mb-3">
+        <!--mb stands for margin bottom; you can change this value-->
+        <label for="inputArtistName" class="col-sm-2 col-form-label">Artist Name:</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputArtistName" class="form-control" asp-for="@Model.NewArtist.ArtistName" />
+            <span asp-validation-for="NewArtist.ArtistName" class="text-danger" id="artistNameError"></span>
+
+        </div>
+    </div>
+    <div class="row mb-3">
+        <!--mb stands for margin bottom; you can change this value-->
+        <label for="inputArtistBio" class="col-sm-2 col-form-label">Artist Bio:</label>
+        <div class="col-sm-10">
+            <textarea rows="4" type="text" id="inputArtistBio" class="form-control" asp-for="NewArtist.ArtistBio"> </textarea>
+            <span asp-validation-for="NewArtist.ArtistBio" class="text-danger" id="artistBioError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <!--mb stands for margin bottom; you can change this value-->
+        <label for="inputArtistImage" class="col-sm-2 col-form-label">Artist Image:</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputArtistImage" class="form-control" asp-for="NewArtist.ArtistImageURL" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <!--mb stands for margin bottom; you can change this value-->
+        <label for="inputArtistWebsite" class="col-sm-2 col-form-label">Artist Website:</label>
+        <div class="col-sm-10">
+            <input type="text" id="inputArtistWebsite" class="form-control" asp-for="NewArtist.ArtistWebsite" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" onclick="return validateInput()">Add artist</button>
+</form>

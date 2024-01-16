@@ -1,0 +1,40 @@
+﻿@page
+@model RecordCollectionUI.Pages.Genres.AddGenreModel
+@{
+    ViewData["Title"] = "Add Genre";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+<script type="text/javascript">
+    function validateInput() {
+        var isValid = true;
+        var genreName = document.getElementById("inputGenreName");
+        if (genretName.value == "") {
+    @*.value gets what is in the textbox*@
+                isValid = false;
+            document.getElementById("genreNameError").innerHTML = "This field is required.";
+        }
+        
+        return isValid;
+    }
+</script>
+<form method="post">
+    <div class="container pt-3">
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <h2 >Add New Genre</h2>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="inputGenreName" class="col-sm-4 form-label">Genre Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputGenreName" asp-for="@Model.NewGenre.GenreName" />
+                <span asp-validation-for="NewGenre.GenreName" class="text-danger" id="genreNameError"></span>
+
+            </div>
+        </div>
+        <button type="submit" class="btn btn-secondary text-center">Add Genre</button>
+    </div>
+</form>

@@ -1,0 +1,117 @@
+﻿@page
+@model RecordCollectionUI.Pages.Albums.EditAlbumModel
+@{
+    ViewData["Title"] = "Edit Album";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+
+<script type="text/javascript">
+    function validateInput() {
+        var isValid = true;
+        var albumTitle = document.getElementById("inputAlbumTitle");
+        var albumArtist = document.getElementById("ddlEditArtist");
+        var albumTracks = document.getElementById("inputNumberOfTracks");
+        var albumReleaseYear = document.getElementById("inputReleaseYear");
+        var albumPrice = document.getElementById("inputPrice");
+        var albumCover = document.getElementById("inputAlbumCoverImageURL");
+        if (albumTitle.value == "") {
+            isValid = false;
+            document.getElementById("albumTitleError").innerHTML = "This field is required.";
+        }
+        if (albumArtist.value == "") {
+            isValid = false;
+            document.getElementById("albumArtistError").innerHTML = "This field is required.";
+        }
+
+        if (albumTracks.value == "0" || albumTracks.value == "") {
+            isValid = false;
+            document.getElementById("albumNumberOfTracksError").innerHTML = "This field is required.";
+        }
+        if (albumReleaseYear.value == "0" || albumReleaseYear.value == "") {
+            isValid = false;
+            document.getElementById("albumReleaseYearError").innerHTML = "This field is required.";
+        }
+        if (albumPrice.value == "0" || albumPrice.value == "") {
+            isValid = false;
+            document.getElementById("albumPriceError").innerHTML = "This field is required.";
+        }
+        if (albumCover.value == "") {
+            isValid = false;
+            document.getElementById("albumAlbumCoverImageURLError").innerHTML = "This field is required.";
+        }
+
+        return isValid;
+    }
+</script>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-3">
+        <label for="inputAlbumTitle" class="col-sm-2 col-form-label" asp-for="ExistingAlbum.AlbumTitle"></label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputAlbumTitle" asp-for="ExistingAlbum.AlbumTitle" />
+            <span asp-validation-for="ExistingAlbum.AlbumTitle" class="text-danger" id="albumTitleError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="ddlEditArtist" class="col-sm-2 col-form-label">Artist:</label>
+        <div class="col-sm-10">
+            <select asp-for="ExistingAlbum.ArtistID" asp-items="@Model.Artist" id="ddlEditArtist"></select>
+            <span asp-validation-for="ExistingAlbum.ArtistID" class="text-danger" id="albumArtistError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputNumberOfTracks" class="col-sm-2 col-form-label">Number of Tracks:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputNumberOfTracks" asp-for="ExistingAlbum.NumberOfTracks" />
+            <span asp-validation-for="ExistingAlbum.NumberOfTracks" class="text-danger" id="albumNumberOfTracksError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputReleaseYear" class="col-sm-2 col-form-label">Release Year:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputReleaseYear" asp-for="ExistingAlbum.ReleaseYear" />
+            <span asp-validation-for="ExistingAlbum.ReleaseYear" class="text-danger" id="albumReleaseYearError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputPrice" class="col-sm-2 col-form-label">Price:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputPrice" asp-for="ExistingAlbum.Price" />
+            <span asp-validation-for="ExistingAlbum.Price" class="text-danger" id="albumPriceError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="inputAlbumCoverImageURL" class="col-sm-2 col-form-label">Album Cover:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputAlbumCoverImageURL" asp-for="ExistingAlbum.AlbumCoverImageURL" />
+            <span asp-validation-for="ExistingAlbum.AlbumCoverImageURL" class="text-danger" id="albumAlbumCoverImageURLError"></span>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-sm-2">
+            <label class="form-label">Genre</label>
+        </div>
+        <div class="col-sm-10">
+            @for (int i = 0; i < Model.GenreList.Count; i++)
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="@Model.GenreList[i].Text"
+                       value="@Model.GenreList[i].Value" name="GenresSelected" checked="@Model.GenreList[i].Selected" />
+                    <label for="@Model.GenreList[i].Text" class="form-check-label">@Model.GenreList[i].Text</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-secondary" onclick="return validateInput()">Update Album</button>
+</form>

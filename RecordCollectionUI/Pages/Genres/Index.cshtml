@@ -1,0 +1,39 @@
+﻿@page
+@model RecordCollectionUI.Pages.Genres.IndexModel
+@{
+    ViewData["Title"] = "Genres";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-sm-3">
+            <h2>Genre List</h2>
+        </div>
+        <div class="col-sm-9">
+            <a asp-page="AddGenre" class="btn btn-secondary">Add Genre</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <!--<h4 class="col-sm-3">Genre ID</h4> -->
+        <h4 class="col-sm-9">Genre Name</h4>
+        @foreach (var obj in Model.Genres)
+        {
+            <div class="col-sm-9">
+                <div class="info-bio">
+                    @obj.GenreName
+                    <a asp-page="ResultsGenre" asp-route-id="@obj.GenreID" class="small-icon">
+                        <i class="bi bi-search" title="List of @obj.GenreName Albums"></i>
+                    </a>
+                    <a asp-page="EditGenre" asp-route-id="@obj.GenreID" class="small-icon">
+                        <i class="bi bi-pencil-fill" title="Edit Genre Name"></i>
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+

@@ -1,0 +1,59 @@
+﻿@page
+@model RecordCollectionUI.Pages.Artists.EditArtistModel
+@{
+    ViewData["Title"] = "Edit Artist";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+
+<script type="text/javascript">
+    function validateInput() {
+        var isValid = true;
+        var artistName = document.getElementById("inputArtistName");
+        var artistBio = document.getElementById("inputArtistBio");
+        if (artistName.value == "") {
+            @*.value gets what is in the textbox*@
+                isValid = false;
+            document.getElementById("artistNameError").innerHTML = "Artist name is required.";
+        }
+        if (artistBio.value == "") {
+            @*.value gets what is in the textbox*@
+                isValid = false;
+            document.getElementById("artistBioError").innerHTML = "Artist bio is required.";
+        }
+        return isValid;
+    }
+</script>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-3">
+        <label for="inputArtistName" class="col-sm-2 col-form-label" asp-for="ExistingArtist.ArtistName"></label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputArtistName" asp-for="ExistingArtist.ArtistName" />
+            <span asp-validation-for="ExistingArtist.ArtistName" class="text-danger" id="artistNameError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputArtistBio" class="col-sm-2 col-form-label" asp-for="ExistingArtist.ArtistBio"></label>
+        <div class="col-sm-10">
+            <textarea class="form-control" id="inputArtistBio" asp-for="ExistingArtist.ArtistBio" rows="4"></textarea>
+            <span asp-validation-for="ExistingArtist.ArtistBio" class="text-danger" id="artistBioError"></span>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputArtistImage" class="col-sm-2 col-form-label">Artist Image:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputArtistName" asp-for="ExistingArtist.ArtistImageURL" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputArtistWebsite" class="col-sm-2 col-form-label">Artist Website:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputArtistWebsite" asp-for="ExistingArtist.ArtistWebsite" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-secondary" onclick="return validateInput()">Update Artist</button>
+</form>

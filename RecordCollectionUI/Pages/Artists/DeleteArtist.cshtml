@@ -1,0 +1,8 @@
+﻿@page
+@model RecordCollectionUI.Pages.Artists.DeleteArtistModel
+@{
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}

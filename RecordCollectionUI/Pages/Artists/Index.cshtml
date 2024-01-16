@@ -1,0 +1,73 @@
+﻿@page
+@model RecordCollectionUI.Pages.Artists.IndexModel
+@{
+    ViewData["Title"] = "Artists";
+    if (HttpContext.User.Identity != null)
+    {
+        Layout = HttpContext.User.Identity.IsAuthenticated ? "_UserLayout" : "_Layout";
+    }
+}
+<form method = "get">
+    <div class="input-group mb-3">
+        <input class="form-control" asp-for="SearchTerm" placeholder="Enter Artist Name"/>
+        <div>
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </div>
+    </div>
+</form>
+
+
+<!--bootstrap row has 12 columns-->
+<div class="container">
+    <div class="row mb-3">
+        <!--mb is margin-bottom, number is number of pixels-->
+        <div class="col-sm-3">
+            <h2>Artist List</h2>
+        </div>
+        <div class="col-sm-9">
+            <a class="btn btn-secondary" asp-page="AddArtist">Add Artist</a>
+        </div>
+    </div>
+    @foreach (var artist in Model.ArtistList)
+    {
+        <!--Artist List-->
+        <div class="row mb-3">
+            <div class="col-sm-3">
+                <!--Where artist image goes-->
+                <a href="@artist.ArtistWebsite"><img class = "artist-image" src="@artist.ArtistImageURL" title="@artist.ArtistName Website"/></a>
+            </div>
+            <div class="col-sm-8">
+                <!--Where artist information goes-->
+                <div class="row">
+                    <!--Artist name here-->
+                    <a asp-page="ResultAlbums" asp-route-id="@artist.ArtistID" class="col-sm-12, title-name" title="@artist.ArtistName Albums">
+                        @artist.ArtistName
+                    </a>
+                </div>
+                <div class="row">
+                    <!--Artist bio here-->
+                    <div class="col-sm-12, info-bio">
+                        @artist.ArtistBio
+                    </div>
+                </div>
+                <div class="row">
+                    <!--Artist website here-->
+                    <div class="col-sm-12">
+                        <a href="@artist.ArtistWebsite" class="artist-website" title="@artist.ArtistName Website">@artist.ArtistName Website</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="col-sm-12">
+                    <a asp-page="EditArtist" asp-route-id="@artist.ArtistID" class="icon" title="Edit @artist.ArtistName">
+                        <i class="bi bi-pencil-square mx-2"></i>
+                    </a>
+                    <a asp-page="DeleteArtist" asp-route-id="@artist.ArtistID" class="icon" title="Delete @artist.ArtistName"
+                    onclick="return confirm('Are you sure you want to delete the author? The action cannot be undone')">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
